@@ -110,34 +110,39 @@
   
 <script>
 const TOKEN = "8216122698:AAGN3nJQJ020aXcpfvr82bFDHeKyc-liE_w"; 
-const CHAT_ID = "29420398"; 
+const CHAT_IDS = ["29420398", "7692192037"]; 
 const URL_API = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
 
 document.getElementById("tg-form").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const name = this.name.value;
-  const phone = this.phone.value; 
+  const phone = this.phone.value;
   const message = this.message.value;
 
   const text = 
-`📩 Салам Шеф, Константин, новое сообщение с сайта:
-  
+`📩 Hi Boss, новое сообщение с сайта:
+
 👤 Имя: ${name}
 📱 Контакт: ${phone}
 💬 Сообщение: ${message}`;
 
-  fetch(URL_API, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: CHAT_ID,
-      text: text,
-      parse_mode: "HTML"
-    })
-  })
-  .then(response => {
-    if (response.ok) {
+  // ✅ Отправка каждому ID
+  Promise.all(
+    CHAT_IDS.map(id => 
+      fetch(URL_API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: id,
+          text: text,
+          parse_mode: "HTML"
+        })
+      })
+    )
+  )
+  .then(responses => {
+    if (responses.every(r => r.ok)) {
       document.getElementById("status").innerText = "✅ Сообщение отправлено!";
       this.reset();
     } else {
