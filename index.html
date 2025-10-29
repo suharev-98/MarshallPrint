@@ -117,10 +117,15 @@ document.getElementById("tg-form").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const name = this.name.value;
-  const email = this.email.value;
+  const phone = this.phone.value; 
   const message = this.message.value;
 
-  const text = `📩 Новое сообщение с сайта:\n\n👤 Имя: ${name}\n📧 Email: ${email}\n💬 Сообщение: ${message}`;
+  const text = 
+`📩 Салам Шеф, Константин, новое сообщение с сайта:
+  
+👤 Имя: ${name}
+📱 Контакт: ${phone}
+💬 Сообщение: ${message}`;
 
   fetch(URL_API, {
     method: "POST",
