@@ -143,6 +143,10 @@ p {
 }
 
 /* Contacts */
+.tel {
+  color: #FFFFFF;
+  text-decoration: none;
+}
 .contacts p {
   text-align: center;
   margin-bottom: 20px;
